@@ -2,34 +2,27 @@
     <div>
 
         <!--轮播图区域-->
-        <mt-swipe :auto="4000">
-            <mt-swipe-item v-for="item in lunboData" :key="item.url">
-                <a :href="item.url">
-                    <img :src="item.img" alt="">
-                </a>
-            </mt-swipe-item>
-        </mt-swipe>
-
+        <swiper :lunboData="lunboData" :isfull="true"></swiper>
 
         <!--六宫格导航-->
         <ul class="mui-table-view mui-grid-view mui-grid-9">
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                <a href="#">
+                <router-link to="/home/newslist">
                     <img src="../../images/menu1.png" alt="">
                     <div class="mui-media-body">新闻资讯</div>
-                </a>
+                </router-link>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                <a href="#">
+                <router-link to="/home/PhotoList">
                     <img src="../../images/menu2.png" alt="">
                     <div class="mui-media-body">图片分享</div>
-                </a>
+                </router-link>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                <a href="#">
+                <router-link to="/home/goodsList">
                     <img src="../../images/menu3.png" alt="">
                     <div class="mui-media-body">商品购买</div>
-                </a>
+                </router-link>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                 <a href="#">
@@ -56,6 +49,7 @@
 
 <script>
     import {Toast} from 'mint-ui';
+    import swiper from '../subcomponents/swiper.vue'
 
     export default {
         data() {
@@ -68,46 +62,27 @@
         },
         methods: {
             getLunboData() {
-//                this.$http.get("http://vue.studyit.io/api/getlunbo").then(result=>{
-//                    console.log(result.body);
-//                    if(result.body.status===0){
-//                        //请求成功
-//                        this.lunboData = result.body.message;
-//
-//                    }else{
-//                        //请求失败
-//                        Toast("轮播图加载失败...");
-//                    }
-//                });
+                this.$http.get("api/getlunbo").then(result=>{
+
+                    if(result.body.status===0){
+                        //请求成功
+                        this.lunboData = result.body.message;
+
+                    }else{
+                        //请求失败
+                        Toast("轮播图加载失败...");
+                    }
+                });
             }
+        },
+        components:{
+            swiper
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    .mint-swipe {
-        height: 200px;
-        .mint-swipe-item {
-            &:nth-child(1) {
-                background-color: red;
-            }
-            &:nth-child(2) {
-                background-color: blue;
-            }
-            &:nth-child(3) {
-                background-color: yellow;
-            }
-            a {
-                display: block;
-                width: 100%;
-                height: 100%;
-                img {
-                    width: 100%;
-                    height: 100%;
-                }
-            }
-        }
-    }
+
 
     .mui-grid-view.mui-grid-9 {
         border-top: none;
