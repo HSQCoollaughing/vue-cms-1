@@ -108,6 +108,19 @@
             },
             addToCar:function () {
                 this.ballFlag = !this.ballFlag;
+
+                //将商品信息组织成需要饿格式
+                var  product = {
+                    id:this.goodInfo.id,
+                    count:this.numberCount,
+                    price:this.goodInfo.sell_price,
+                    selected:true
+                };
+
+
+                this.$store.commit('addToCar',product);
+
+
             },
             beforeEnter:function (el) {
                 el.style.transform='translate(0,0)';
@@ -134,7 +147,7 @@
                 const yDistance = endPosition.top - starPosition.top;
 
                 el.style.transform=`translate(${xDistance}px,${yDistance}px)`;
-                el.style.transition='all 0.5s cubic-bezier(.4,-0.3,1,.68)';
+                el.style.transition='all 0.3s cubic-bezier(.4,-0.3,1,.68)';
                 done();
             },
             afterEnter:function (el) {
